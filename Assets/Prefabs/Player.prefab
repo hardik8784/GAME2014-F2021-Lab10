@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff54edef48501b4fa36cd32af07423c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Joystick: {fileID: 0}
   horizontalForce: 10
   verticalForce: 40
   isGrounded: 0

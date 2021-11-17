@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    [Header("Touch Input")]
+    public Joystick Joystick;
+
     [Header("Movement")] 
     public float horizontalForce;
     public float verticalForce;
@@ -37,15 +40,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Move()
     {
-        float x = Input.GetAxisRaw("Horizontal");
+        float x = Input.GetAxisRaw("Horizontal") + Joystick.Horizontal;
         if (isGrounded)
         {
             //float deltaTime = Time.deltaTime;
 
             // Keyboard Input
            
-            float y = Input.GetAxisRaw("Vertical");
-            float jump = Input.GetAxisRaw("Jump");
+            float y = Input.GetAxisRaw("Vertical") + Joystick.Vertical;
+            float jump = Input.GetAxisRaw("Jump") + ((UIController.JumpButtonDown) ? 1.0f : 0.0f);
 
             // Check for Flip
 
@@ -61,12 +64,12 @@ public class PlayerBehaviour : MonoBehaviour
                 State = PlayerAnimationState.IDLE;
             }
             
-            // Touch Input
-            Vector2 worldTouch = new Vector2();
-            foreach (var touch in Input.touches)
-            {
-                worldTouch = Camera.main.ScreenToWorldPoint(touch.position);
-            }
+            //// Touch Input
+            //Vector2 worldTouch = new Vector2();
+            //foreach (var touch in Input.touches)
+            //{
+            //    worldTouch = Camera.main.ScreenToWorldPoint(touch.position);
+            //}
 
             float horizontalMoveForce = x * horizontalForce;// * deltaTime;
             float jumpMoveForce = jump * verticalForce; // * deltaTime;
