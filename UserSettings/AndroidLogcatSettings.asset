@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "emulator-5554",
         "name": "ca.hardikshah.game2014f2021Lab8",
-        "processId": 3114,
+        "processId": 3269,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -12,6 +12,18 @@
             "deviceId": "emulator-5554",
             "name": "ca.hardikshah.game2014f2021Lab8",
             "processId": 3114,
+            "exited": false
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "ca.hardikshah.game2014f2021Lab8",
+            "processId": 2950,
+            "exited": false
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "ca.hardikshah.game2014f2021Lab8",
+            "processId": 3269,
             "exited": false
         }
     ],
