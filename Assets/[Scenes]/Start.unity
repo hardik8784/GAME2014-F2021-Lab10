@@ -123,6 +123,72 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &153233423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 153233424}
+  - component: {fileID: 153233425}
+  m_Layer: 0
+  m_Name: TimeLine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &153233424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153233423}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &153233425
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153233423}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 312923618edf46d47aeb3a2294842685, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 0}
+    value: {fileID: 1413915632}
+  - key: {fileID: 0}
+    value: {fileID: 1990004341}
+  - key: {fileID: 0}
+    value: {fileID: 2055682627}
+  - key: {fileID: 0}
+    value: {fileID: 1413915632}
+  - key: {fileID: 0}
+    value: {fileID: 1413915632}
+  - key: {fileID: -6684302153256077506, guid: 312923618edf46d47aeb3a2294842685, type: 2}
+    value: {fileID: 1413915632}
+  - key: {fileID: -4551253621444288517, guid: 312923618edf46d47aeb3a2294842685, type: 2}
+    value: {fileID: 1990004341}
+  - key: {fileID: 8068679452437650411, guid: 312923618edf46d47aeb3a2294842685, type: 2}
+    value: {fileID: 2055682627}
+  - key: {fileID: -5611572840508308393, guid: 312923618edf46d47aeb3a2294842685, type: 2}
+    value: {fileID: 2119764733}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &529650384
 GameObject:
   m_ObjectHideFlags: 0
@@ -7762,7 +7828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1695}
+  m_AnchoredPosition: {x: 0, y: 1700}
   m_SizeDelta: {x: 864, y: 553}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1413915630
@@ -8284,7 +8350,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 56cc586f5f9dd084f8261a72fdff4fa3, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
