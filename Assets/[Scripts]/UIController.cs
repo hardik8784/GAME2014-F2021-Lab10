@@ -4,46 +4,44 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    [Header("On Screen Controls")]
-    public GameObject OnScreenControls;
+    [Header("On Screen Controls")] 
+    public GameObject onScreenControls;
 
     [Header("Button Control Events")]
-    public static bool JumpButtonDown;
+    public static bool jumpButtonDown;
+
     // Start is called before the first frame update
     void Start()
     {
         CheckPlatform();
     }
 
+    // PRIVATE METHODS
+
     private void CheckPlatform()
     {
-        switch(Application.platform)
+        switch (Application.platform)
         {
             case RuntimePlatform.Android:
             case RuntimePlatform.IPhonePlayer:
             case RuntimePlatform.WindowsEditor:
-                OnScreenControls.SetActive(true);
+                onScreenControls.SetActive(true);
                 break;
             default:
-                OnScreenControls.SetActive(false);
+                onScreenControls.SetActive(false);
                 break;
-
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // EVENT FUNCTIONS
 
     public void OnJumpButton_Down()
     {
-        JumpButtonDown = true;
+        jumpButtonDown = true;
     }
 
     public void OnJumpButton_Up()
     {
-        JumpButtonDown = false;
+        jumpButtonDown = false;
     }
 }

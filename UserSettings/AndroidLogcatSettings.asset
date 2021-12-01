@@ -2,28 +2,58 @@
     "m_SelectedDeviceId": "emulator-5554",
     "m_SelectedPackage": {
         "deviceId": "emulator-5554",
-        "name": "ca.hardikshah.game2014f2021Lab8",
-        "processId": 3269,
+        "name": "com.GeorgeBrownCollege.GAME2014F2021Lab10",
+        "processId": 3116,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "emulator-5554",
-            "name": "ca.hardikshah.game2014f2021Lab8",
-            "processId": 3114,
+            "name": "com.GeorgeBrownCollege.GAME2014F2021Lab8",
+            "processId": 4940,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "com.GeorgeBrownCollege.GAME2014F2021Lab9",
+            "processId": 4119,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "com.ldmnq.launcher3",
+            "processId": 1762,
             "exited": false
         },
         {
             "deviceId": "emulator-5554",
-            "name": "ca.hardikshah.game2014f2021Lab8",
-            "processId": 2950,
+            "name": "com.GeorgeBrownCollege.GAME2014F2021Lab10",
+            "processId": 3116,
             "exited": false
         },
         {
-            "deviceId": "emulator-5554",
-            "name": "ca.hardikshah.game2014f2021Lab8",
-            "processId": 3269,
+            "deviceId": "ce07160715c92b1302",
+            "name": "com.GeorgeBrownCollege.GAME2014F2021Lab8",
+            "processId": 27660,
+            "exited": false
+        },
+        {
+            "deviceId": "ce07160715c92b1302",
+            "name": "com.GeorgeBrownCollege.GAME2014F2021Lab8",
+            "processId": 29080,
+            "exited": false
+        },
+        {
+            "deviceId": "ce07160715c92b1302",
+            "name": "com.GeorgeBrownCollege.GAME2014F2021Lab8",
+            "processId": 30921,
+            "exited": false
+        },
+        {
+            "deviceId": "1WMHH830560525",
+            "name": "com.GeorgeBrownCollege.GAME2014F2021Lab10",
+            "processId": 1388,
             "exited": false
         }
     ],

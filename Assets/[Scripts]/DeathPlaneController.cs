@@ -4,29 +4,18 @@ using UnityEngine;
 
 public class DeathPlaneController : MonoBehaviour
 {
-    public Transform PlayerSpawnPoint;
+    public Transform playerSpawnPoint;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            collision.transform.position = PlayerSpawnPoint.position;
+            other.transform.position = playerSpawnPoint.position;
         }
         else
         {
-            collision.gameObject.SetActive(false);
+            other.gameObject.SetActive(false);
         }
+
     }
 }

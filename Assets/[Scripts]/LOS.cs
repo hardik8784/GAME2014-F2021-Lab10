@@ -6,10 +6,10 @@ using UnityEngine;
 [System.Serializable]
 public class LOS : MonoBehaviour
 {
-    [Header("Detection Properties")]
-    public Collider2D CollidesWith;
-    public ContactFilter2D ContactFilter;
-    public List<Collider2D> ColliderList;
+    [Header("Detection Properties")] 
+    public Collider2D collidesWith; // debug
+    public ContactFilter2D contactFilter;
+    public List<Collider2D> colliderList;
 
     private PolygonCollider2D LOSCollider;
 
@@ -22,11 +22,14 @@ public class LOS : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Physics2D.GetContacts(LOSCollider, ContactFilter, ColliderList);
+        Physics2D.GetContacts(LOSCollider, contactFilter, colliderList);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-       CollidesWith = collision;
+        if (!other.gameObject.CompareTag("Bullet"))
+        {
+            collidesWith = other;
+        }
     }
 }

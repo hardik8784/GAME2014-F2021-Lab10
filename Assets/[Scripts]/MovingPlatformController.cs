@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class MovingPlatformController : MonoBehaviour
 {
-    [Header("Movement")]
-    public MovingPlatformDirection Direction;
-    [Range(0.1f,10.0f)]
-    public float Speed;
-    [Range(1,20)]
-    public float Distance;
+    [Header("Movement")] 
+    public MovingPlatformDirection direction;
+    [Range(0.1f, 10.0f)]
+    public float speed;
+    [Range(1, 20)]
+    public float distance;
     [Range(0.05f, 0.1f)]
-    public float DistanceOffSet;
+    public float distanceOffset;
     public bool isLooping;
 
-    private Vector2 StartingPosition;
+    private Vector2 startingPosition;
     private bool isMoving;
+
     // Start is called before the first frame update
     void Start()
     {
-        StartingPosition = transform.position;
+        startingPosition = transform.position;
         isMoving = true;
     }
 
@@ -27,7 +28,7 @@ public class MovingPlatformController : MonoBehaviour
     void Update()
     {
         MovePlatform();
-        if(isLooping)
+        if (isLooping)
         {
             isMoving = true;
         }
@@ -35,32 +36,27 @@ public class MovingPlatformController : MonoBehaviour
 
     private void MovePlatform()
     {
-        float PingPongValue = (isMoving) ? Mathf.PingPong(Time.time * Speed, Distance) : Distance;
+        float pingPongValue = (isMoving) ? Mathf.PingPong(Time.time * speed, distance) : distance;
 
-        //if(Mathf.Approximately(PingPongValue, Distance - DistanceOffSet))
-        if ((!isLooping) && (PingPongValue >=  Distance - DistanceOffSet))
+        if ((!isLooping) && (pingPongValue >= distance - distanceOffset))
         {
             isMoving = false;
-            //Debug.Log("True");
         }
 
-        //Debug.Log("PingPongValue : " + PingPongValue);
-        switch (Direction)
+        switch (direction)
         {
             case MovingPlatformDirection.HORIZONTAL:
-                transform.position = new Vector2(StartingPosition.x + PingPongValue, transform.position.y);
+                transform.position = new Vector2(startingPosition.x + pingPongValue, transform.position.y);
                 break;
             case MovingPlatformDirection.VERTICAL:
-                transform.position = new Vector2(transform.position.x,StartingPosition.y + PingPongValue);
+                transform.position = new Vector2(transform.position.x, startingPosition.y + pingPongValue);
                 break;
             case MovingPlatformDirection.DIAGONAL_UP:
-                transform.position = new Vector2(StartingPosition.x + PingPongValue, StartingPosition.y + PingPongValue);
+                transform.position = new Vector2(startingPosition.x + pingPongValue, startingPosition.y + pingPongValue);
                 break;
             case MovingPlatformDirection.DIAGONAL_DOWN:
-                transform.position = new Vector2(StartingPosition.x + PingPongValue, StartingPosition.y - PingPongValue);
+                transform.position = new Vector2(startingPosition.x + pingPongValue, startingPosition.y - pingPongValue);
                 break;
         }
-
-       
     }
 }

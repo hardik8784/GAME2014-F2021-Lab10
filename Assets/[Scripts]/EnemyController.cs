@@ -4,28 +4,37 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [Header("Player Detection")]
-    public LOS EnemyLOS;
+    [Header("Player Detection")] 
+    public LOS enemyLOS;
 
-    [Header("Movement")]
-    public float RunForce;
-    public Transform LookAheadPoint;
-    public Transform LookInFrontPoint;
-    public LayerMask GroundLayerMask;
-    public LayerMask WallLayerMask;
+    [Header("Movement")] 
+    public float runForce;
+    public Transform lookAheadPoint;
+    public Transform lookInFrontPoint;
+    public LayerMask groundLayerMask;
+    public LayerMask wallLayerMask;
     public bool isGroundAhead;
 
-    [Header("Animation")]
-    public Animator AnimatorController;
+    [Header("Animation")] 
+    public Animator animatorController;
 
-    private Rigidbody2D RigidBody;
+    [Header("Bullet Firing")] 
+    public Transform bulletSpawn;
+    public float fireDelay;
+    public GameObject player;
+    public GameObject bulletPrefab;
+    public AudioSource spitSound;
+
+    private Rigidbody2D rigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
-        RigidBody = GetComponent<Rigidbody2D>();
-        EnemyLOS = GetComponent<LOS>();
-        AnimatorController = GetComponent<Animator>();
+        rigidbody = GetComponent<Rigidbody2D>();
+        enemyLOS = GetComponent<LOS>();
+        animatorController = GetComponent<Animator>();
+        player = GameObject.FindObjectOfType<PlayerBehaviour>().gameObject;
+        spitSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,39 +43,42 @@ public class EnemyController : MonoBehaviour
         LookAhead();
         LookInFront();
 
-        if(!HasLOS())
+        if (!HasLOS())
         {
-            AnimatorController.enabled = true;
-            AnimatorController.Play("Run");
+            animatorController.enabled = true;
+            animatorController.Play("Run");
             MoveEnemy();
         }
         else
         {
-            AnimatorController.enabled = false;
+            animatorController.enabled = false;
+            FireBullet();
         }
         
     }
 
     private bool HasLOS()
     {
-        if(EnemyLOS.ColliderList.Count > 0)
+        if (enemyLOS.colliderList.Count > 0)
         {
-            if((EnemyLOS.CollidesWith.gameObject.CompareTag("Player")) && (EnemyLOS.ColliderList[0].gameObject.CompareTag("Player")))
+            // Case 1 enemy polygonCollider2D collides with player and player is at the top of the list
+            if ((enemyLOS.collidesWith.gameObject.CompareTag("Player")) &&
+                (enemyLOS.colliderList[0].gameObject.CompareTag("Player")))
             {
                 return true;
             }
+            // Case 2 player is in the Collider List and we can draw ray to the player
             else
             {
-                foreach(var Collider in EnemyLOS.ColliderList)
+                foreach (var collider in enemyLOS.colliderList)
                 {
-                    if(Collider.gameObject.CompareTag("Player"))
+                    if (collider.gameObject.CompareTag("Player"))
                     {
-                        var Hit = Physics2D.Raycast(LookInFrontPoint.position, Vector3.Normalize(Collider.transform.position - LookInFrontPoint.position),5.0f,EnemyLOS.ContactFilter.layerMask);
-                        //Debug.Log(Hit.collider);
-                        if((Hit)&& (Hit.collider.gameObject.CompareTag("Player")))
+                        var hit = Physics2D.Raycast(lookInFrontPoint.position, Vector3.Normalize(collider.transform.position - lookInFrontPoint.position), 5.0f, enemyLOS.contactFilter.layerMask);
+                        
+                        if((hit) && (hit.collider.gameObject.CompareTag("Player")))
                         {
-                            Debug.DrawLine(LookInFrontPoint.position, Collider.transform.position, Color.red);
-
+                            Debug.DrawLine(lookInFrontPoint.position, collider.transform.position, Color.red);
                             return true;
                         }
                     }
@@ -77,40 +89,30 @@ public class EnemyController : MonoBehaviour
         return false;
     }
 
+
     private void LookAhead()
     {
-        var hit = Physics2D.Linecast(transform.position, LookAheadPoint.position,GroundLayerMask);
-        if(hit)
-        {
-            isGroundAhead = true;
-            //Debug.Log("There is Ground Ahead");
-        }
-        else
-        {
-            isGroundAhead = false;
-            //Debug.Log("No Ground Ahead");
-        }
+        var hit = Physics2D.Linecast(transform.position, lookAheadPoint.position, groundLayerMask);
+        isGroundAhead = (hit) ? true : false;
     }
 
     private void LookInFront()
     {
-        var hit = Physics2D.Linecast(transform.position, LookInFrontPoint.position, WallLayerMask);
+        var hit = Physics2D.Linecast(transform.position, lookInFrontPoint.position, wallLayerMask);
         if (hit)
         {
             Flip();
-            //Debug.Log("Wall Ahead");
         }
     }
 
     private void MoveEnemy()
     {
-       // transform.position += new Vector3(Speed * Direction * Time.deltaTime , 0.0f);
-       if(isGroundAhead)
+        if (isGroundAhead)
         {
-            RigidBody.AddForce(Vector2.left * RunForce * transform.localScale.x);
-            RigidBody.velocity *= 0.99f;
+            rigidbody.AddForce(Vector2.left * runForce * transform.localScale.x);
+            rigidbody.velocity *= 0.90f;
         }
-       else
+        else
         {
             Flip();
         }
@@ -121,29 +123,45 @@ public class EnemyController : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x * -1.0f, transform.localScale.y, transform.localScale.z);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void FireBullet()
     {
-        if (collision.gameObject.CompareTag("Platform"))
+        // delay bullet firing
+        if (Time.frameCount % fireDelay == 0)
         {
-            transform.SetParent(collision.transform);
+            var temp_bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
+            temp_bullet.GetComponent<BulletController>().direction = Vector3.Normalize(player.transform.position - bulletSpawn.position);
+            spitSound.Play();
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+
+    // EVENTS
+
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (collision.gameObject.CompareTag("Platform"))
+        if (other.gameObject.CompareTag("Platform"))
+        {
+            transform.SetParent(other.transform);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
         {
             transform.SetParent(null);
         }
     }
+
+    
 
     // UTILITIES
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, LookAheadPoint.position);
+        Gizmos.DrawLine(transform.position, lookAheadPoint.position);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, LookInFrontPoint.position);
+        Gizmos.DrawLine(transform.position, lookInFrontPoint.position);
     }
 }
